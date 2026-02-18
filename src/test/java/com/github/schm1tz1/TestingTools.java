@@ -134,9 +134,11 @@ public class TestingTools {
 
   public static List<String> randomSubset(List<String> inputList, int size) {
     if (size > inputList.size()) {
-      throw new IllegalArgumentException("Subset size " + size + " exceeds list size " + inputList.size());
+      throw new IllegalArgumentException(
+          "Subset size " + size + " exceeds list size " + inputList.size());
     }
     List<String> shuffled = new ArrayList<>(inputList);
     Collections.shuffle(shuffled);
     return shuffled.subList(0, size);
-  }}
+  }
+}
