@@ -28,7 +28,7 @@
         <jetbrains.annotations.version>26.0.2</jetbrains.annotations.version>
         <jmx.prometheus.version>1.0.1</jmx.prometheus.version>
         <java.version>17</java.version>
-        <main.class>com.github.schm1tz1.KStreamsTemplate</main.class>
+        <main.class>com.github.schm1tz1.KStreamsFilterApp</main.class>
     </properties>
 
     <repositories>

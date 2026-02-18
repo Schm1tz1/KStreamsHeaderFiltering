@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Properties;
 import java.util.Random;
@@ -129,4 +131,12 @@ public class TestingTools {
   public static boolean headerExists(Headers headers, String key) {
     return headers.headers(key).iterator().hasNext();
   }
-}
+
+  public static List<String> randomSubset(List<String> inputList, int size) {
+    if (size > inputList.size()) {
+      throw new IllegalArgumentException("Subset size " + size + " exceeds list size " + inputList.size());
+    }
+    List<String> shuffled = new ArrayList<>(inputList);
+    Collections.shuffle(shuffled);
+    return shuffled.subList(0, size);
+  }}

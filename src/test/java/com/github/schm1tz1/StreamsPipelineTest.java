@@ -7,6 +7,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.time.Instant;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
+
 import org.apache.kafka.common.serialization.Serdes;
 import org.apache.kafka.streams.TestInputTopic;
 import org.apache.kafka.streams.TestOutputTopic;
@@ -20,10 +22,43 @@ import org.slf4j.LoggerFactory;
 class StreamsPipelineTest {
 
   static final Logger logger = LoggerFactory.getLogger(StreamsPipelineTest.class);
+  private static final int MSG_COUNT = 10000;
 
   private static TestInputTopic<String, byte[]> inputTopic;
   private static TestOutputTopic<String, byte[]> outputTopic;
   private static TopologyTestDriver topologyTestDriver;
+
+  final List<String> allHeaderKeys = List.of(
+          "X-B3-ParentSpanId",
+          "X-B3-Sampled",
+          "X-B3-SpanId",
+          "X-B3-TraceId",
+          "baggage-microservice-name",
+          "baggage_microservice-name",
+          "X-ApplicationName",
+          "X-CiamId",
+          "X-FinOrVin",
+          "X-ServiceName",
+          "X-Timestamp",
+          "X-TrackingId",
+          "__TypeId__",
+          "azure",
+          "dd-pathway-ctx-base64",
+          "properties",
+          "system",
+          "traceparent",
+          "tracestate",
+          "version",
+          "x-datadog-parent-id",
+          "x-datadog-sampling-priority",
+          "x-datadog-tags",
+          "x-datadog-trace-id",
+          "x-opt-enqueued-time",
+          "x-opt-offset",
+          "x-opt-partition-key",
+          "x-opt-sequence-number",
+          "x-origin"
+  );
 
   @BeforeEach
   void createTopologyTestDriver() {
@@ -64,6 +99,22 @@ class StreamsPipelineTest {
     assertTrue(TestingTools.headerExists(lastRecordHeaders, "hash-header-key"));
     assertFalse(TestingTools.headerExists(lastRecordHeaders, "azure-event-hub"));
     assertFalse(TestingTools.headerExists(lastRecordHeaders, "x-datadog-tracing"));
+  }
+
+  @Test
+  void massTestWithLargeHeaderSet() {
+
+    for (int i = 0; i < MSG_COUNT; i++) {
+      var headers = TestingTools.randomSubset(allHeaderKeys, 10);
+      var testRecord =
+              TestingTools.createRandomTestRecordWithRandomHeaders(
+                      Instant.now(), headers);
+
+      inputTopic.pipeInput(testRecord);
+    }
+    assertEquals(MSG_COUNT, outputTopic.getQueueSize());
+    
+    var lastRecordHeaders = outputTopic.readRecord().headers();
   }
 
   @AfterEach

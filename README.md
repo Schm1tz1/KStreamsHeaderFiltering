@@ -18,9 +18,10 @@ Example use cases:
 
 ## Data Format / (De-)Serialization
 
-- Keys and values are treated as plain `String` (UTF-8)
+- `HeaderFilterProcessor` is generic (`<K, V>`) and works with any key/value types
+- The default pipeline (`StreamsPipeline`) uses `Serdes.String()` for both key and value
 - Headers are filtered by key name using Java regex; header values are passed through unchanged
-- Serdes: `Serdes.String()` for both key and value (default, configurable via standard Kafka Streams properties)
+- Serdes are configurable via standard Kafka Streams properties
 
 ## Build
 
@@ -80,6 +81,16 @@ streamsApp.negateRegExp=true
 ```
 
 Standard Kafka Streams and Kafka client properties (security, schema registry, etc.) can be added to the same file.
+
+### Programmatic use
+
+`HeaderFilterProcessor` can also be constructed directly with an arbitrary `Predicate<Header>` for custom filtering logic (e.g. filtering by header value):
+
+```java
+// Keep only headers whose value length is > 0
+HeaderFilterProcessor<String, String> processor =
+    new HeaderFilterProcessor<>(header -> header.value() != null && header.value().length > 0, "my-filter");
+```
 
 ## Deployment, Running
 
