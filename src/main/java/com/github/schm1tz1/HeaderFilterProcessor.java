@@ -19,8 +19,8 @@ import org.slf4j.LoggerFactory;
  * A Kafka Streams {@link Processor} that filters record headers based on a predicate.
  *
  * <p>Headers matching the predicate are retained in the output record; non-matching headers are
- * removed. The processor also records custom metrics tracking the number and byte size of input
- * and output headers.
+ * removed. The processor also records custom metrics tracking the number and byte size of input and
+ * output headers.
  *
  * @param <K> the key type of the stream records
  * @param <V> the value type of the stream records
@@ -212,8 +212,8 @@ public class HeaderFilterProcessor<K, V> implements Processor<K, V, K, V> {
   /**
    * Processes a single record by filtering its headers and forwarding the result downstream.
    *
-   * <p>If an exception occurs during header processing, the original unmodified record is
-   * forwarded and the skip metric is incremented.
+   * <p>If an exception occurs during header processing, the original unmodified record is forwarded
+   * and the skip metric is incremented.
    *
    * @param record the record whose headers should be filtered
    */

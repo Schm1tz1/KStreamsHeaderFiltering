@@ -8,8 +8,8 @@ import picocli.CommandLine;
 /**
  * Runnable Kafka Streams filtering application with command-line argument parsing.
  *
- * <p>Reads a configuration file, optionally enables monitoring interceptors, and starts a
- * {@link StreamsPipeline} that filters Kafka record headers based on a regular expression.
+ * <p>Reads a configuration file, optionally enables monitoring interceptors, and starts a {@link
+ * StreamsPipeline} that filters Kafka record headers based on a regular expression.
  */
 @CommandLine.Command(
     name = "KStreamsFilterApp",

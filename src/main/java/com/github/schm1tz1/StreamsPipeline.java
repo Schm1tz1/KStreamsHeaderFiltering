@@ -14,8 +14,8 @@ import org.slf4j.LoggerFactory;
 /**
  * Kafka Streams pipeline that filters record headers using a {@link HeaderFilterProcessor}.
  *
- * <p>The pipeline reads from a configurable input topic, strips headers that do not match a
- * regular expression, and writes the filtered records to a configurable output topic.
+ * <p>The pipeline reads from a configurable input topic, strips headers that do not match a regular
+ * expression, and writes the filtered records to a configurable output topic.
  */
 public class StreamsPipeline {
   static final Logger logger = LoggerFactory.getLogger(StreamsPipeline.class);
@@ -66,9 +66,7 @@ public class StreamsPipeline {
     return topology;
   }
 
-  /**
-   * Starts the Kafka Streams application and blocks until a shutdown signal is received.
-   */
+  /** Starts the Kafka Streams application and blocks until a shutdown signal is received. */
   void run() {
     final Topology topology = createStreamsTopology();
 
