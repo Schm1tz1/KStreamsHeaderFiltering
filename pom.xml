@@ -27,7 +27,7 @@
         <junit.jupiter.version>5.12.2</junit.jupiter.version>
         <jetbrains.annotations.version>26.0.2</jetbrains.annotations.version>
         <jmx.prometheus.version>1.0.1</jmx.prometheus.version>
-        <java.version>9</java.version>
+        <java.version>17</java.version>
         <main.class>com.github.schm1tz1.KStreamsTemplate</main.class>
     </properties>
 
@@ -82,7 +82,7 @@
                 <artifactId>maven-javadoc-plugin</artifactId>
                 <version>3.12.0</version>
                 <configuration>
-                    <source>8</source>
+                    <source>${java.version}</source>
                     <show>private</show>
                     <nohelp>true</nohelp>
                 </configuration>
